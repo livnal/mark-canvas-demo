@@ -6,7 +6,7 @@ import {
 
 import anime from 'animejs/lib/anime.es.js';
 
-import { MarkObjectType, MarkObject, MarkRectObject, MarkPolygonObject } from './object'
+import { MarkObjectType, MarkObject, MarkRectObject, MarkPolygonObject, MarkLineObject, MarkLine_DObject } from './object'
 
 // const colors = ["rgb(252, 45, 19)", "rgb(246, 255, 72)", "rgb(59, 59, 254)", "rgb(0, 209, 1)", "rgb(79, 255, 228)", "rgb(253, 136, 33)", "rgb(249, 18, 119)", "rgb(240, 88, 235)", "rgb(219, 247, 215)", "rgb(188, 97, 36)", "rgb(21, 225, 157)", "rgb(160, 166, 54)", "rgb(242, 180, 122)", "rgb(196, 168, 219)", "rgb(27, 55, 29)", "rgb(149, 12, 20)"]
 
@@ -86,13 +86,13 @@ class MarkCanvas {
     this.backgroundImage = new Image()
     this.objectsLayer.add(this.backgroundImage)
 
-    let line0 = new Line({ x: 0, y: 0, strokeWidth: 5, width: 0, stroke: "red", rotation: 45 })
-    this.objectsLayer.add(line0)
+    // let line0 = new Line({ x: 0, y: 0, strokeWidth: 5, width: 0, stroke: "red", rotation: 45 })
+    // this.objectsLayer.add(line0)
 
-    setTimeout(() => {
-      let time = 200
-      anime({ targets: line0, easing: 'linear', width: 141.4213562373095, duration: time, delay: time * 0 })
-    }, 200)
+    // setTimeout(() => {
+    //   let time = 200
+    //   anime({ targets: line0, easing: 'linear', width: 141.4213562373095, duration: time, delay: time * 0 })
+    // }, 200)
 
     // 辅助提示图层
     this.guideLayer = this.app.addLeafer({ hittable: false })
@@ -186,6 +186,10 @@ class MarkCanvas {
         obj = MarkPolygonObject.import(this, item)
       } else if (item.type === MarkObjectType.RECT) {
         obj = MarkRectObject.import(this, item)
+      } else if (item.type === MarkObjectType.LINE) {
+        obj = MarkLineObject.import(this, item)
+      } else if (item.type === MarkObjectType.LINE_D) {
+        obj = MarkLine_DObject.import(this, item)
       }
       obj && this.markObjectList.push(obj)
     })
@@ -477,7 +481,7 @@ class MarkCanvas {
 
       // 获取最后一个标注对象
       let obj = this.markObjectList[this.markObjectList.length - 1]
-      if (obj.pointList.length < obj.minPointCount) {
+      if (obj?.pointList?.length < obj.minPointCount) {
         obj.destory() // 销毁
         this.markObjectList.pop()
       } else {
@@ -502,6 +506,12 @@ class MarkCanvas {
       this.markObjectList.push(obj)
     } else if (type == MarkObjectType.POLYGON) {
       let obj = new MarkPolygonObject(this)
+      this.markObjectList.push(obj)
+    } else if (type == MarkObjectType.LINE) {
+      let obj = new MarkLineObject(this)
+      this.markObjectList.push(obj)
+    } else if (type == MarkObjectType.LINE_D) {
+      let obj = new MarkLine_DObject(this)
       this.markObjectList.push(obj)
     }
 

@@ -1,5 +1,6 @@
 import { Ellipse, Group, IPointData, Path, Rect, Text } from 'leafer-ui'
 import { genUUID } from '../utils/uuid'
+import {hexToRgba} from '../utils/utils'
 import { isPointInPolygon } from '../utils/geometry'
 import MarkCanvas from '..'
 import MarkObject from './object'
@@ -312,7 +313,7 @@ export default class MarkRectObject extends MarkObject {
       path: "",
       windingRule: "evenodd",
       stroke: this.color,
-      fill: (this.mouseEnter || this.status == 'edit') ? "rgba(255, 255, 255, 0.5)" : "rgba(0,0,0,0)",
+      fill: (this.mouseEnter || this.status == 'edit') ? "rgba(255, 255, 255, 0.5)" : hexToRgba(this.color,0.3),
       strokeWidth: lineW
     })
     this.obj.add(path)

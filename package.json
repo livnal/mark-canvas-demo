@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@leafer-in/arrow": "^1.0.0-rc.23",
     "@leafer-ui/interface": "^1.0.0-beta.4",
+    "html2canvas": "^1.4.1",
     "leafer-ui": "^1.0.0-beta.4",
     "vue": "^3.3.4",
     "vuedraggable": "^4.1.0"
